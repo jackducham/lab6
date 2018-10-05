@@ -1,4 +1,7 @@
 # Create a 50 MHz clock
-create_clock -name {Clk} -period 20ns -waveform {0.000 5.000}
-# Apply clock to all ports in top-level file with the name "Clk"
-[get_ports {Clk}]
+create_clock -name {Clk} -period 20ns -waveform {0.000 5.000} [get_ports {Clk}]
+
+set_input_delay -clock {Clk} -max 3 [all_inputs]
+set_input_delay -clock {Clk} -min 2 [all_inputs]
+
+set_output_delay -clock {Clk} 2 [all_outputs]
