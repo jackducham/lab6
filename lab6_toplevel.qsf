@@ -1179,3 +1179,16 @@ set_instance_assignment -name IO_MAXIMUM_TOGGLE_RATE "0 MHz" -to SW
 
 
 set_global_assignment -name LAST_QUARTUS_VERSION "18.0.0 Lite Edition"
+set_global_assignment -name SYSTEMVERILOG_FILE tristate.sv
+set_global_assignment -name SYSTEMVERILOG_FILE test_memory.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLC3_2.sv
+set_global_assignment -name SYSTEMVERILOG_FILE slc3.sv
+set_global_assignment -name SYSTEMVERILOG_FILE memory_contents.sv
+set_global_assignment -name SYSTEMVERILOG_FILE Mem2IO.sv
+set_global_assignment -name SYSTEMVERILOG_FILE lab6_toplevel.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ISDU.sv
+set_global_assignment -name SYSTEMVERILOG_FILE hex_driver.sv
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
