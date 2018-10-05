@@ -1,4 +1,4 @@
-module sign_extend11bit
+module sign_extend11to16bit
 (
 	input [10:0] in,
 	output logic [15:0] out
@@ -22,7 +22,7 @@ module sign_extend11bit
 
 endmodule
 
-module sign_extend9bit
+module sign_extend9to16bit
 (
 	input [8:0] in,
 	output logic [15:0] out
@@ -46,7 +46,7 @@ module sign_extend9bit
 
 endmodule
 
-module zero_extend8bit
+module zero_extend8to16bit
 (
 	input [7:0] in,
 	output logic [15:0] out
@@ -63,7 +63,7 @@ module zero_extend8bit
 
 endmodule
 
-module sign_extend6bit
+module sign_extend6to16bit
 (
 	input [5:0] in,
 	output logic [15:0] out
@@ -87,7 +87,7 @@ module sign_extend6bit
 
 endmodule
 
-module sign_extend5bit
+module sign_extend5to16bit
 (
 	input [4:0] in,
 	output logic [15:0] out

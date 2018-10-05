@@ -74,8 +74,7 @@ assign MIO_EN = ~OE;
 
 // You need to make your own datapath module and connect everything to the datapath
 // Be careful about whether Reset is active high or low
-// datapath d0 (/* Please fill in the signals.... */);
-// hello
+datapath d0 ();
 
 // Our SRAM and I/O controller
 Mem2IO memory_subsystem(
