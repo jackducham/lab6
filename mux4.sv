@@ -10,5 +10,6 @@ module mux4
             2'b01: y = d1;
             2'b10: y = d2;
             2'b11: y = d3;
+        endcase
      end
 endmodule
