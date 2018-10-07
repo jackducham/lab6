@@ -11,7 +11,7 @@ module mux16
             4'b0100: y = d1;
             4'b0010: y = d2;
             4'b0001: y = d3;
-				default: y - x;
+				default: y = x;
         endcase
      end
 endmodule

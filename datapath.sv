@@ -17,7 +17,7 @@ module datapath
 	
 	//MUX to select which gate drives the bus
 	assign GATE_SELECT = {GATEMDR, GATEPC, GATEMARMUX, GATEALU};
-	mux16 MUX_TO_BUS(.d0(MDR),.d1(PC),.d2(ADDER_OUT),.d3(),.x(16'bZ)
+	mux16 MUX_TO_BUS(.d0(MDR),.d1(PC),.d2(ADDER_OUT),.d3(),.x(16'bZ),
 						  .s(GATE_SELECT),.y(DATA_OUT));
 	
 	//MDR components
