@@ -12,12 +12,12 @@ module datapath
 );
 
 	logic [15:0] DATA_TO_MDR, DATA_TO_PC, PC_1, ADDER_OUT, ADDER_A, ADDER_B,
-					 A2M_0, A2M_1, A2M_2;
+					 A2M_0, A2M_1, A2M_2, ALU_B, S2M_0, ALU_OUT;
 	logic [3:0] GATE_SELECT;
 	
 	//MUX to select which gate drives the bus
 	assign GATE_SELECT = {GATEMDR, GATEPC, GATEMARMUX, GATEALU};
-	mux16 MUX_TO_BUS(.d0(MDR),.d1(PC),.d2(ADDER_OUT),.d3(),.x(16'bZ),
+	mux16 MUX_TO_BUS(.d0(MDR),.d1(PC),.d2(ADDER_OUT),.d3(ALU_OUT),.x(16'bZ),
 						  .s(GATE_SELECT),.y(DATA_OUT));
 	
 	//MDR components
@@ -45,7 +45,8 @@ module datapath
 	mux2                  ADDR1_MUX(.d0(),.d1(PC),.s(ADDR1MUX),.y(ADDER_B));
 	
 	//ALU components
-	ALU  ALU_UNIT(.a(),.b(ALU_B),.s(ALUK),.y());
-	mux2 SR2_MUX(.d0(),.d1(),.s(),.y());
+	assign S2M_0 = {{11{IR[4]}},IR[4:0]};
+	ALU  ALU_UNIT(.a(),.b(ALU_B),.s(ALUK),.y(ALU_OUT));
+	mux2 SR2_MUX(.d0(S2M_0),.d1(),.s(SR2MUX),.y(ALU_B));
 	
 endmodule
