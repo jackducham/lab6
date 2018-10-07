@@ -5,3 +5,5 @@ set_input_delay -clock {Clk} -max 3 [all_inputs]
 set_input_delay -clock {Clk} -min 2 [all_inputs]
 
 set_output_delay -clock {Clk} 2 [all_outputs]
+
+derive_clock_uncertainty
