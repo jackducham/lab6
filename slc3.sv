@@ -29,9 +29,9 @@ module slc3(
 // Declaration of push button active high signals
 logic Reset_ah, Continue_ah, Run_ah;
 
-assign Reset_ah = ~Reset;
-assign Continue_ah = ~Continue;
-assign Run_ah = ~Run;
+//assign Reset_ah = ~Reset;
+//assign Continue_ah = ~Continue;
+//assign Run_ah = ~Run;
 
 // Internal connections
 logic BEN;
@@ -49,10 +49,10 @@ logic [15:0] Data_from_SRAM, Data_to_SRAM;
 logic [3:0][3:0] hex_4;
 
 // For week 1, hexdrivers will display IR. Comment out these in week 2.
-hex_driver hex_driver3 (IR[15:12], HEX3);
-hex_driver hex_driver2 (IR[11:8], HEX2);
-hex_driver hex_driver1 (IR[7:4], HEX1);
-hex_driver hex_driver0 (IR[3:0], HEX0);
+hex_driver hex_driver3 (.In0(IR[15:12]), .Out0(HEX3));
+hex_driver hex_driver2 (.In0(IR[11:8]), .Out0(HEX2));
+hex_driver hex_driver1 (.In0(IR[7:4]), .Out0(HEX1));
+hex_driver hex_driver0 (.In0(IR[3:0]), .Out0(HEX0));
 
 // For week 2, hexdrivers will be mounted to Mem2IO
 // hex_driver hex_driver3 (hex_4[3][3:0], HEX3);
@@ -76,7 +76,7 @@ assign MIO_EN = ~OE;
 // Be careful about whether Reset is active high or low
 datapath d0 (.Clk(Clk),.Reset(Reset_ah),.GATEPC(GatePC),.GATEMDR(GateMDR),.LD_MAR(LD_MAR),.LD_MDR(LD_MDR),
 				 .LD_IR(LD_IR),.LD_PC(LD_PC),.MIO_EN(MIO_EN),.PCMUX_EN(PCMUX[0]),.DATA(Data),
-				 .DATA_TO_MDR(MDR_In),.MAR(MAR),.IR(IR),.MDR(MDR),.PC_MDR(Data));
+				 .DATA_TO_MDR(MDR_In),.MAR(MAR),.IR(IR),.MDR(MDR),.PC_MDR(Data),.PC(PC));
 
 // Our SRAM and I/O controller
 Mem2IO memory_subsystem(
@@ -97,5 +97,8 @@ ISDU state_controller(
     .Opcode(IR[15:12]), .IR_5(IR[5]), .IR_11(IR[11]),
     .Mem_CE(CE), .Mem_UB(UB), .Mem_LB(LB), .Mem_OE(OE), .Mem_WE(WE)
 );
+
+// Sychronizers
+sync button_sync[2:0] (Clk, {~Reset, ~Run, ~Continue}, {Reset_ah, Run_ah, Continue_ah});
 
 endmodule

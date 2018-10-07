@@ -17,6 +17,8 @@ module register16(
 			begin
             out <= D;
 			end
+        else
+            out <= out;
     end
 
 	 assign Data_Out = out;
