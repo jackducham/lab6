@@ -2,11 +2,12 @@ module datapath
 (
 	input logic Clk, Reset,
 					GATEPC, GATEMDR, GATEALU, GATEMARMUX,
-					LD_MAR, LD_MDR, LD_IR, LD_PC, LD_REG, MIO_EN,
+					LD_MAR, LD_MDR, LD_IR, LD_PC, LD_CC, LD_REG, MIO_EN,
 					DRMUX, SR1MUX, SR2MUX, ADDR1MUX,
+					N_IN, Z_IN, P_IN,
 	input logic [1:0] PCMUX, ADDR2MUX, ALUK,
-	input logic [2:0] SR2,
 	input logic[15:0] DATA, DATA_TO_CPU,
+	output logic N_OUT, Z_OUT, P_OUT,
 	output logic[15:0] MAR, IR, MDR, PC, DATA_OUT
 );
 
@@ -49,8 +50,13 @@ module datapath
 	ALU  		ALU_UNIT(.a(REG_1),.b(ALU_B),.s(ALUK),.y(ALU_OUT));
 	mux2 		SR2_MUX(.d0(REG_2),.d1(S2M_0),.s(SR2MUX),.y(ALU_B));
 	reg_file REG_FILE(.Clk(Clk),.Reset(Reset),.LD_REG(LD_REG),.DR(DR),.SR1(SR1),
-							.SR2(SR2),.DATA(DATA),.SR1_OUT(REG_1),.SR2_OUT(REG_2));
+							.SR2(IR[2:0]),.DATA(DATA),.SR1_OUT(REG_1),.SR2_OUT(REG_2));
 	mux2     DR_MUX(.d0(IR[11:9]),.d1(3'b111),.s(DRMUX),.y(DR));
 	mux2     SR1_MUX(.d0(IR[11:9]),.d1(IR[8:6]),.s(SR1MUX),.y(SR1));
+	
+	//NZP components
+	d_flip_flop N(.Clk(Clk),.Load(LD_CC),.Reset(Reset),.D(N_IN),.Q(N_OUT));
+	d_flip_flop Z(.Clk(Clk),.Load(LD_CC),.Reset(Reset),.D(Z_IN),.Q(Z_OUT));
+	d_flip_flop P(.Clk(Clk),.Load(LD_CC),.Reset(Reset),.D(P_IN),.Q(P_OUT));
 	
 endmodule
