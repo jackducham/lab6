@@ -184,11 +184,12 @@ module ISDU (   input logic         Clk,
 				LD_BEN = 1'b1;
 			S_01 : 
 				begin 
+                    LD_CC = 1'b1;
+                    LD_REG = 1'b1;
+                    GateALU = 1'b1;
+                    ALUK = 1'b00;
+                    SR1MUX = 1'b1;
 					SR2MUX = IR_5;
-					ALUK = 2'b00;
-					GateALU = 1'b1;
-					LD_REG = 1'b1;
-					// incomplete...
 				end
 
 			// You need to finish the rest of states.....
