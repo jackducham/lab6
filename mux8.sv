@@ -17,4 +17,5 @@ module mux8
 				3'b111: y = d7;
         endcase
      end
+	  
 endmodule

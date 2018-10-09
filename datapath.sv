@@ -1,19 +1,19 @@
 module datapath
 (
 	input logic Clk, Reset,
-					BEN,
 					GATEPC, GATEMDR, GATEALU, GATEMARMUX,
-					LD_MAR, LD_MDR, LD_IR, LD_PC, LD_BEN, LD_CC, LD_REG, LD_LED,
+					LD_MAR, LD_MDR, LD_IR, LD_PC, LD_REG, MIO_EN,
 					DRMUX, SR1MUX, SR2MUX, ADDR1MUX,
-					MIO_EN,
 	input logic [1:0] PCMUX, ADDR2MUX, ALUK,
+	input logic [2:0] SR2,
 	input logic[15:0] DATA, DATA_TO_CPU,
 	output logic[15:0] MAR, IR, MDR, PC, DATA_OUT
 );
 
-	logic [15:0] DATA_TO_MDR, DATA_TO_PC, PC_1, ADDER_OUT, ADDER_A, ADDER_B,
-					 A2M_0, A2M_1, A2M_2, ALU_B, S2M_0, ALU_OUT;
+	logic [2:0] DR, SR1;
 	logic [3:0] GATE_SELECT;
+	logic [15:0] DATA_TO_MDR, DATA_TO_PC, PC_1, ADDER_OUT, ADDER_A, ADDER_B,
+					 A2M_0, A2M_1, A2M_2, ALU_B, S2M_0, ALU_OUT, REG_1, REG_2;
 	
 	//MUX to select which gate drives the bus
 	assign GATE_SELECT = {GATEMDR, GATEPC, GATEMARMUX, GATEALU};
@@ -42,11 +42,15 @@ module datapath
 	carry_lookahead_adder ADDER(.A(ADDER_A),.B(ADDER_B),.Sum(ADDER_OUT),.CO());
 	mux4                  ADDR2_MUX(.d0(A2M_0),.d1(A2M_1),.d2(A2M_2),.d3(16'h0),
 											  .s(ADDR2MUX),.y(ADDER_A));
-	mux2                  ADDR1_MUX(.d0(),.d1(PC),.s(ADDR1MUX),.y(ADDER_B));
+	mux2                  ADDR1_MUX(.d0(REG_1),.d1(PC),.s(ADDR1MUX),.y(ADDER_B));
 	
 	//ALU components
 	assign S2M_0 = {{11{IR[4]}},IR[4:0]};
-	ALU  ALU_UNIT(.a(),.b(ALU_B),.s(ALUK),.y(ALU_OUT));
-	mux2 SR2_MUX(.d0(S2M_0),.d1(),.s(SR2MUX),.y(ALU_B));
+	ALU  		ALU_UNIT(.a(REG_1),.b(ALU_B),.s(ALUK),.y(ALU_OUT));
+	mux2 		SR2_MUX(.d0(S2M_0),.d1(REG_2),.s(SR2MUX),.y(ALU_B));
+	reg_file REG_FILE(.Clk(Clk),.Reset(Reset),.LD_REG(LD_REG),.DR(DR),.SR1(SR1),
+							.SR2(SR2),.DATA(DATA),.SR1_OUT(REG_1),.SR2_OUT(REG_2));
+	mux2     DR_MUX(.d0(3'b111),.d1(IR[11:9]),.s(DRMUX),.y(DR));
+	mux2     SR1_MUX(.d0(IR[11:9]),.d1(IR[8:6]),.s(SR1MUX),.y(SR1));
 	
 endmodule

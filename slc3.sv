@@ -74,10 +74,10 @@ assign MIO_EN = ~OE;
 
 // You need to make your own datapath module and connect everything to the datapath
 // Be careful about whether Reset is active high or low
-datapath d0 (.Clk(Clk),.Reset(Reset_ah),.BEN(BEN),
+datapath d0 (.Clk(Clk),.Reset(Reset_ah),
 				 .GATEPC(GatePC),.GATEMDR(GateMDR),.GATEALU(GateALU),.GATEMARMUX(GateMARMUX),
 				 .LD_MAR(LD_MAR),.LD_MDR(LD_MDR),.LD_IR(LD_IR),.LD_PC(LD_PC),
-				 .LD_BEN(LD_BEN),.LD_CC(LD_CC),.LD_REG(LD_REG),.LD_LED(LD_LED),.MIO_EN(MIO_EN),
+				 .LD_REG(LD_REG),.MIO_EN(MIO_EN),
 				 .DRMUX(DRMUX),.SR1MUX(SR1MUX),.SR2MUX(SR2MUX),.ADDR1MUX(ADDR1MUX),
 				 .PCMUX(PCMUX),.ADDR2MUX(ADDR2MUX),.ALUK(ALUK),.DATA(Data),.DATA_TO_CPU(MDR_In),
 				 .MAR(MAR),.IR(IR),.MDR(MDR),.PC(PC));
