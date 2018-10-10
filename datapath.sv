@@ -2,15 +2,15 @@ module datapath
 (
 	input logic Clk, Reset,
 					GATEPC, GATEMDR, GATEALU, GATEMARMUX,
-					LD_MAR, LD_MDR, LD_IR, LD_PC, LD_CC, LD_REG, MIO_EN,
+					LD_MAR, LD_MDR, LD_IR, LD_PC, LD_CC, LD_BEN, LD_REG, MIO_EN,
 					DRMUX, SR1MUX, SR2MUX, ADDR1MUX,
-					N_IN, Z_IN, P_IN,
 	input logic [1:0] PCMUX, ADDR2MUX, ALUK,
 	input logic[15:0] DATA, DATA_TO_CPU,
-	output logic N_OUT, Z_OUT, P_OUT,
+	output logic BEN_OUT,
 	output logic[15:0] MAR, IR, MDR, PC, DATA_OUT
 );
-
+	
+	logic BEN_IN, N_IN, Z_IN, P_IN, N_OUT, Z_OUT, P_OUT;
 	logic [2:0] DR, SR1;
 	logic [3:0] GATE_SELECT;
 	logic [15:0] DATA_TO_MDR, DATA_TO_PC, PC_1, ADDER_OUT, ADDER_A, ADDER_B,
@@ -54,9 +54,26 @@ module datapath
 	mux2     DR_MUX(.d0(IR[11:9]),.d1(3'b111),.s(DRMUX),.y(DR));
 	mux2     SR1_MUX(.d0(IR[11:9]),.d1(IR[8:6]),.s(SR1MUX),.y(SR1));
 	
-	//NZP components
+	//NZP and BEN components
+	assign BEN_IN = (N_OUT & IR[11]) | (Z_OUT & IR[10]) | (P_OUT & IR[9]);
+	assign N_IN = DATA[15];
+	
+	always_comb
+	begin
+		if(DATA == 16'h0)
+			Z_IN = 1'b1;
+		else
+			Z_IN = 1'b0;
+			
+		if(Z_IN || N_IN)
+			P_IN = 1'b0;
+		else
+			P_IN = 1'b1;
+	end
+	
 	d_flip_flop N(.Clk(Clk),.Load(LD_CC),.Reset(Reset),.D(N_IN),.Q(N_OUT));
 	d_flip_flop Z(.Clk(Clk),.Load(LD_CC),.Reset(Reset),.D(Z_IN),.Q(Z_OUT));
 	d_flip_flop P(.Clk(Clk),.Load(LD_CC),.Reset(Reset),.D(P_IN),.Q(P_OUT));
+	d_flip_flop BEN(.Clk(Clk),.Load(LD_BEN),.Reset(Reset),.D(BEN_IN),.Q(BEN_OUT));
 	
 endmodule
