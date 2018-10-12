@@ -262,10 +262,8 @@ module ISDU (   input logic         Clk,
             S_12:
                 begin
                     LD_PC = 1'b1;
-                    GateALU = 1'b1; // not sure about this - see datapath image. ADDR1MUX should be directly connected to SR1OUT
                     ALUK = 2'b11;
-                    PCMUX = 2'b01;  // same as above- shouldn't this be 10 for the adder?
-                    SR1MUX = 1'b1;
+                    PCMUX = 2'b10;  // same as above- shouldn't this be 10 for the adder?
                 end
             S_16:
                 begin
