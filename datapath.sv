@@ -18,7 +18,7 @@ module datapath
 	logic [15:0] BUS, BUS_OUT;
 	
 	assign BUS = DATA;
-	assign DATA_OUT = BUS;
+	assign DATA_OUT = BUS_OUT;
 	
 	//MUX to select which gate drives the bus
 	assign GATE_SELECT = {GATEMDR, GATEPC, GATEMARMUX, GATEALU};
