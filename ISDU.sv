@@ -262,8 +262,10 @@ module ISDU (   input logic         Clk,
             S_12:
                 begin
                     LD_PC = 1'b1;
-                    ALUK = 2'b11;
-                    PCMUX = 2'b10;  // same as above- shouldn't this be 10 for the adder?
+                    PCMUX = 2'b10;
+						  ADDR2MUX = 2b'00;
+						  ADDR1MUX = 1b'1;
+						  SR1MUX = 1'b1;
                 end
             S_16:
                 begin
