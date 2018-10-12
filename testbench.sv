@@ -14,7 +14,8 @@ logic [19:0] ADDR;
 wire [15:0] Data;
 
 // internal monitoring
-logic [15:0] MAR0, MDR0, IR0, PC0, PC;
+//logic [15:0] MAR0, MDR0, IR0, PC0, PC;
+logic [15:0] IR0;
 
 integer error_count = 0;
 
@@ -23,11 +24,11 @@ lab6_toplevel p0(.*);
 always #1 Clk = ~Clk;
 
 always_comb begin
-    MAR0 = p0.my_slc.d0.MAR;
-    MDR0 = p0.my_slc.d0.MDR;
-    IR0 = p0.my_slc.d0.IR;
-    PC0 = p0.my_slc.d0.PC_MDR;
-    PC = p0.my_slc.d0.b;
+//    MAR0 = p0.my_slc.d0.MAR;
+//    MDR0 = p0.my_slc.d0.MDR;
+    IR0 = p0.my_slc.IR;
+//    PC0 = p0.my_slc.d0.PC_MDR;
+//    PC = p0.my_slc.d0.b;
 end
 
 
@@ -35,30 +36,30 @@ initial begin
     Reset = 1;
     Run = 1;
     Continue = 1;
-    S = 16'hFFFF;
+    S = 16'h0003;
     
     #5 Reset = 0;
     #5 Reset = 1;
     #5 Run = 0;
     #5 Run = 1;
-    #5 Continue = 0;
-    #5 Continue = 1;
-    #5 Run = 0;
-    #5 Run = 1;
-    #5 Continue = 0;
-    #5 Continue = 1;
-    #5 Run = 0;
-    #5 Run = 1;
-    #5 Continue = 0;
-    #5 Continue = 1;
-    #5 Run = 0;
-    #5 Run = 1;
-    #5 Continue = 0;
-    #5 Continue = 1;
-    #5 Run = 0;
-    #5 Run = 1;
-    #5 Continue = 0;
-    #5 Continue = 1;
+//    #5 Continue = 0;
+//    #5 Continue = 1;
+//    #5 Run = 0;
+//    #5 Run = 1;
+//    #5 Continue = 0;
+//    #5 Continue = 1;
+//    #5 Run = 0;
+//    #5 Run = 1;
+//    #5 Continue = 0;
+//    #5 Continue = 1;
+//    #5 Run = 0;
+//    #5 Run = 1;
+//    #5 Continue = 0;
+//    #5 Continue = 1;
+//    #5 Run = 0;
+//    #5 Run = 1;
+//    #5 Continue = 0;
+//    #5 Continue = 1;
         
     
 end

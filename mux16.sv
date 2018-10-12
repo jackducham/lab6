@@ -1,9 +1,9 @@
 module mux16
     #(parameter width = 16)
     (input logic [width-1:0] d0, d1, d2, d3, x,
-     input logic [3:0] s,
+	  input logic [3:0] s,
      output logic [width-1:0] y);
-     
+	  
      always_comb
 	  begin
 			case (s)
