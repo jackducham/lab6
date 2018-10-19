@@ -15,7 +15,7 @@ wire [15:0] Data;
 
 // internal monitoring
 //logic [15:0] MAR0, MDR0, IR0, PC0, PC;
-logic [15:0] IR0;
+logic [15:0] IR0, PC0;
 
 integer error_count = 0;
 
@@ -28,7 +28,7 @@ always_comb begin
 //    MDR0 = p0.my_slc.d0.MDR;
     IR0 = p0.my_slc.IR;
 //    PC0 = p0.my_slc.d0.PC_MDR;
-//    PC = p0.my_slc.d0.b;
+    PC0 = p0.my_slc.d0.PC;
 end
 
 
@@ -36,12 +36,12 @@ initial begin
     Reset = 1;
     Run = 1;
     Continue = 1;
-    S = 16'h0003;
+    S = 16'h005a;
     
-    #5 Reset = 0;
-    #5 Reset = 1;
-    #5 Run = 0;
-    #5 Run = 1;
+    #2 Reset = 0;
+    #2 Reset = 1;
+    #2 Run = 0;
+    #2 Run = 1;
 //    #5 Continue = 0;
 //    #5 Continue = 1;
 //    #5 Run = 0;
